@@ -38,15 +38,15 @@ Vagrant.configure("2") do |config|
         echo "Creating database, if it doesn't already exist..."
         mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $SITE_NAME;"
 
-        echo "Updating box servername"
-        echo "ServerName $SITE_NAME" | sudo tee /etc/apache2/conf-available/servername.conf
-
         PHP_INFO_FILE="/var/www/public/info.php"
         if [ ! -f "$PHP_INFO_FILE" ]
         then
             echo "Creating phpinfo file..."
             echo '<?php echo phpinfo(); ?>' > /var/www/public/info.php
         fi
+
+        echo "Updating Apache ServerName..."
+        echo "ServerName $SITE_NAME" | sudo tee /etc/apache2/conf-available/servername.conf
 
         echo "Restarting web server..."
         sudo service apache2 restart
