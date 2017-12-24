@@ -10,24 +10,29 @@ Vagrant.configure("2") do |config|
     # Optional, disable update checks (for when working offline)
     # config.vm.box_check_update = false
 
-    config.vm.box = "jonathanbossenger/boss-box" # to be changed once uploaded
+    config.vm.box = "jonathanbossenger/boss-box"
     config.vm.network "private_network", ip: settings['site']['ip']
     config.vm.hostname = settings['site']['sitename']
     config.vm.synced_folder "../", "/var/www/public", :mount_options => ["dmode=777", "fmode=666"]
     
-    # Optional NFS. Make sure to remove other synced_folder line too
+    # Optional NFS. Make sure to comment out the synced_folder above
     #config.vm.synced_folder "../", "/var/www/public", :nfs => { :mount_options => ["dmode=777","fmode=666"] }
 
     config.vm.provider "virtualbox" do |vb|
-        # set to increments of 1024
-        vb.memory = "2048"
+        vb.memory = settings['site']['virtualmemory']
         vb.name = settings['site']['sitename']
     end
 
-    config.vm.provision "shell", :args => [settings['site']['sitename'], settings['site']['mysqlpassword']], inline: <<-SHELL
+    config.vm.provision "shell", :args => [settings['site']['sitename'], settings['site']['database'], settings['site']['mysqlpassword']], inline: <<-SHELL
 
         SITE_NAME=$1
-        MYSQL_PASSWORD=$2
+        DATABASE_NAME=$2
+        MYSQL_PASSWORD=$3
+
+        if [$DATABASE_NAME == '']:
+        then
+            DATABASE_NAME=$SITE_NAME
+        fi
 
         if [ $MYSQL_PASSWORD != 'password' ];
         then
