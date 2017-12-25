@@ -44,22 +44,30 @@ Configuration options
 =====================
 
 1. Ability to enable/disable update checks (when working offline)
-1. Edit sitename, IP address and MySQL root password
+1. Edit sitename, IP address, database name, and MySQL root password
 1. Set Virtual Machine memory size
-1. Automatically create info.php file in webroot
 
-Requirements
-============
+Required Software
+=================
 
-1. [Vagrant]
-1. [VirtualBox]
+Make sure you have the following software installed
+
+1. [Vagrant](https://www.vagrantup.com/) 
+1. [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+
+Recommended Software
+====================
+
+[Vagrant Hosts Updater](https://github.com/cogitatio/vagrant-hostsupdater)
+
+This plugin will allow your system to manage writing to the hosts file automatically, instead of having to edit /etc/hosts each time.
     
 Initial Setup (Linux/OSx)
 =======================
     
-From your terminal window:    
+From a terminal window:    
     
-Clone the repo to some place on your computer
+Clone the github repo
 
 ```bash
 git clone git@github.com:jonathanbossenger/boss-box-lamp.git
@@ -91,48 +99,46 @@ Start BossBox
 vagrant up
 ```
 
-How do I...
-===========
-
-**SSH into the Virtual Machine?**
-
-From the terminal window
+Basic Vagrant Usage
+===================
 
 ```bash
-cd /path/to/myproject/webroot/vagrant/
+vagrant up
+```
+Start the virtual machine
+
+```bash
+vagrant halt
+```
+
+Stop the virtual machine
+
+```bash
 vagrant ssh
 ```
 
-**Access the development site?**
- 
-Browse to either the ip address or sitename you have specified in your settings.yaml
+Login to the virtual machine via SSH
 
-eg http://192.168.33.10 or http://sitename
 
-**Access PHPMyAdmin?**
+Access
+======
 
+You can access the local site by either the IP address or sitename specified in your settings.yaml
+
+```
+http://192.168.33.10 or http://sitename
+```
+
+**PHPMyAdmin**
+
+```
 http://192.168.33.10/phpmyadmin or http://sitename/phpmyadmin
+```
 
-**Access MailHog?**
+**MailHog**
 
+```
 http://192.168.33.10:8025 or http://sitename:8025
-
-http://wpjobs:8025
-
-
-
-How to use? (Windows)
-=====================
-
-Coming soon
-
-Setting hosts records
-=====================
-
-I recommend installing the [Vagrant Hosts Updater](https://github.com/cogitatio/vagrant-hostsupdater) plugin to allow your system to manage writing to the hosts file automatically.
-
-```bash
-vagrant plugin install vagrant-hostsupdater
 ```
 
 Enjoy!    
