@@ -8,7 +8,7 @@ settings = YAML.load_file 'settings.yml'
 Vagrant.configure("2") do |config|
 
     # Optional, disable update checks (for when working offline)
-    # config.vm.box_check_update = false
+    #config.vm.box_check_update = false
 
     config.vm.box = "jonathanbossenger/boss-box"
     config.vm.network "private_network", ip: settings['site']['ip']
@@ -23,41 +23,9 @@ Vagrant.configure("2") do |config|
         vb.name = settings['site']['sitename']
     end
 
-    config.vm.provision "shell", :args => [settings['site']['sitename'], settings['site']['database'], settings['site']['mysqlpassword']], inline: <<-SHELL
-
-        SITE_NAME=$1
-        DATABASE_NAME=$2
-        MYSQL_PASSWORD=$3
-
-        if [$DATABASE_NAME == '']:
-        then
-            DATABASE_NAME=$SITE_NAME
-        fi
-
-        if [ $MYSQL_PASSWORD != 'password' ];
-        then
-            echo "Updating MySQL root password..."
-            mysql -uroot -ppassword -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQL_PASSWORD'); FLUSH PRIVILEGES;"
-        fi
-
-        echo "Creating database, if it doesn't already exist..."
-        mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $SITE_NAME;"
-
-        PHP_INFO_FILE="/var/www/public/info.php"
-        if [ ! -f "$PHP_INFO_FILE" ]
-        then
-            echo "Creating phpinfo file..."
-            echo '<?php echo phpinfo(); ?>' > /var/www/public/info.php
-        fi
-
-        echo "Updating Apache ServerName..."
-        echo "ServerName $SITE_NAME" | sudo tee /etc/apache2/conf-available/servername.conf
-
-        echo "Restarting web server..."
-        sudo service apache2 restart
-
-        echo "Setup complete."
-
-    SHELL
+    config.vm.provision "shell" do |s|
+        s.path: "setup.sh"
+        s.args => [settings['site']['ip'], [settings['site']['sitename'], settings['site']['database'], settings['site']['mysqlpassword']]
+    end
 
 end
