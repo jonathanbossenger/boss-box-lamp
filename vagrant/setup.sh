@@ -25,7 +25,7 @@ echo "Updating Apache ServerName..."
 echo "ServerName $SITE_NAME" | sudo tee /etc/apache2/conf-available/servername.conf
 
 echo "Setting xdebug IP address in PHP ini..."
-echo "xdebug.remote_host=192.168.33.15" | sudo tee /etc/php/7.0/apache2/conf.d/user.ini
+echo "xdebug.remote_host=$IP_ADDRESS" | sudo tee -a /etc/php/7.0/apache2/conf.d/user.ini
 
 echo "Restarting web server..."
 sudo service apache2 restart
