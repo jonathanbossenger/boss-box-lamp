@@ -44,9 +44,9 @@ Additional Software
 Configuration options
 =====================
 
-1. Ability to enable/disable update checks (when working offline)
 1. Edit sitename, IP address, database name, and MySQL root password
 1. Set Virtual Machine memory size
+1. Ability to enable/disable update checks (when working offline)
 
 Required Software
 =================
@@ -64,7 +64,7 @@ Recommended Software
 This plugin will allow your system to manage writing to the hosts file automatically, instead of having to edit /etc/hosts each time.
     
 Initial Setup (Linux/OSx)
-=======================
+=========================
     
 From a terminal window:    
     
@@ -156,5 +156,4 @@ This box has Xdebug installed and is setup to make use of the [Zero-configuratio
 On the first run, PHPStorm will ask you to map the debugger to a local path, you should be able to accept the defaults.
 
 
-Enjoy!    
-    
+Enjoy!

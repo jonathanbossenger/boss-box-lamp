@@ -1,7 +1,7 @@
 #site specific settings
 site:
   ip: 192.168.33.10 # virtual machine ip address
-  sitename: sitename # virtual machine domain ie http://sitename
+  sitename: sitename.test # virtual machine domain eg http://sitename.test
   database: database # create default database
   mysqlpassword: password # mysql root password
   virtualmemory: 2048 # virtual machine memory
