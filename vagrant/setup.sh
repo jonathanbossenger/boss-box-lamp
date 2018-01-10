@@ -27,6 +27,14 @@ echo "ServerName $SITE_NAME" | sudo tee /etc/apache2/conf-available/servername.c
 echo "Setting xdebug IP address in PHP ini..."
 echo "xdebug.remote_host=$IP_ADDRESS" | sudo tee -a /etc/php/7.0/apache2/conf.d/user.ini
 
+## Fixing errors in php-gettext
+## Remove this once the Ubuntu package gets updated
+echo "Fixing deprecation errors in php-gettext"
+sudo sed -i 's/function StringReader/function __construct/g' /usr/share/php/php-gettext/streams.php
+sudo sed -i "s/function FileReader/function __construct/g" /usr/share/php/php-gettext/streams.php
+sudo sed -i "s/function CachedFileReader/function __construct/g" /usr/share/php/php-gettext/streams.php
+sudo sed -i 's/function gettext_reader/function __construct/g' /usr/share/php/php-gettext/gettext.php
+
 echo "Restarting web server..."
 sudo service apache2 restart
 
