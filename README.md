@@ -120,6 +120,40 @@ vagrant ssh
 
 Login to the virtual machine via SSH
 
+Create a new WP Site
+====================
+
+Login to the virtual machine via SSH 
+
+```bash
+vagrant ssh
+```
+
+Switch to the /var/www/public directory
+
+```bash
+cd /var/www/public
+```
+
+Download WordPress via the CLI
+
+```bash
+wp core download
+```
+
+Create the wp-config.php file, replace {database_name} and {password} with the values you set for those fields in your settings.yaml.
+
+```bash
+wp config create --dbname={database_name} --dbuser=root --dbpass={password}
+```
+
+Run the famous 5 second WP-CLI install, replace {sitename} with the value you set for that field in your settings.yaml and change the rest to suit your needs.
+
+```bash
+wp core install --url={sitename} --title=Example --admin_user=supervisor --admin_password=strongpassword --admin_email=info@example.com
+```
+
+Browse to your Vagrant IP address or sitename and see your WP instal.
 
 Access
 ======
